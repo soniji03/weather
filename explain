@@ -1,0 +1,142 @@
+/**
+ * Retrieves the current weather data for a given city from OpenWeatherMap API.
+ *
+ * @async
+ * @function getWeather
+ * @returns {void}
+ *
+ * @example
+ * // Get the weather data for New York City
+ * getWeather();
+ */
+async function getWeather() {
+    /**
+     * API key for OpenWeatherMap API.
+     *
+     * @constant {string}
+     */
+    const apiKey = '42f9c25f557905ffb16cc1836e33ae48';
+    const apiKey = 'qFMZAhBYR3nPIW3qDZ2E9dqObUaqj2ci';
+    
+    /**
+     * City name input field.
+     *
+     * @type {HTMLInputElement}
+     */
+    const cityInput = document.getElementById('city');
+    
+    /**
+     * City name to retrieve weather data for.
+     *
+     * @type {string}
+     */
+    const city = cityInput.value;
+    
+    /**
+     * URL for OpenWeatherMap API request.
+     *
+     * @type {string}
+     */
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+
+    try {
+        /**
+         * Fetch the weather data from OpenWeatherMap API.
+         *
+         * @type {Promise<Response>}
+         */
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+            /**
+             * Throw an error if the response is not OK.
+             *
+             * @throws {Error}
+             */
+            throw new Error(`Error: ${response.status} - ${response.statusText}`);
+        }
+        
+        /**
+         * Parse the response data as JSON.
+         *
+         * @type {Promise<object>}
+         */
+        const data = await response.json();
+        
+        if (data.cod && data.cod !== 200) {
+            /**
+             * Throw an error if the API returns an error code.
+             *
+             * @throws {Error}
+             */
+            throw new Error(`Error: ${data.cod} - ${data.message}`);
+        }
+        
+        /**
+         * Display the weather data.
+         *
+         * @function displayWeather
+         * @param {object} data - Weather data from OpenWeatherMap API.
+         */
+        displayWeather(data);
+    }
+    catch (error) {
+        /**
+         * Log the error to the console.
+         *
+         * @param {Error} error - Error object.
+         */
+        console.log(error);
+        
+        /**
+         * Display the error message.
+         *
+         * @type {HTMLParagraphElement}
+         */
+        document.getElementById('weather').innerHTML = `<p>${error.message}</p>`;
+    }
+}
+
+
+/**
+ * Displays the weather data in the HTML element with the id "weather).
+ *
+ * @function displayWeather
+ * @param {object} data - Weather data from OpenWeatherMap API.
+ * @returns {void}
+ *
+ * @example
+ * // Display the weather data for New York City
+ * displayWeather({
+ *   name: 'New York',
+ *   sys: { country: 'US' },
+ *   main: { temp: 25, humidity: 60 },
+ *   weather: [{ description: 'Sunny' }],
+ *   wind: { speed: 10 }
+ * });
+ */
+function displayWeather(data) {
+    /**
+     * HTML element to display the weather data.
+     *
+     * @type {HTMLDivElement}
+     */
+    const weatherDiv = document.getElementById('weather');
+    
+    /**
+     * Set the inner HTML of the weatherDiv element.
+     *
+     * @type {string}
+     */
+    weatherDiv.innerHTML = `
+        <h2>${data.name}, ${data.sys.country}</h2>
+        <p>Temperature: ${data.main.temp}°C</p>
+        <p>Weather: ${data.weather[0].description}</p>
+        <p>Humidity: ${data.main.humidity}%</p>
+        <p>Wind Speed: ${data.wind.speed} m/s</p>
+    `;
+}
+
+
+
+// const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
