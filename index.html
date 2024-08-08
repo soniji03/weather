@@ -8,17 +8,76 @@
     <style>
         body {
             background-image: url("bg3.jpg");
-            /* background-image: url("bg2.png"); */
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             opacity: 0.9;
-            
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @media (max-width: 767px) {
+            h1 {
+                font-size: 2rem;
+                margin-bottom: 1rem;
+            }
+
+            .mb-5 {
+                margin-bottom: 2rem;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+                width: 100%;
+            }
+
+            input, button {
+                font-size: 1rem;
+                padding: 0.75rem;
+                width: 100%;
+            }
+
+            #weather {
+                font-size: 1rem;
+                border: 1px solid #ccc;
+                padding: 1rem;
+                border-radius: 0.5rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            h1 {
+                font-size: 3rem;
+                margin-bottom: 3rem;
+            }
+
+            .mb-5 {
+                margin-bottom: 3rem;
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            input, button {
+                font-size: 1.25rem;
+                padding: 1rem;
+            }
+
+            #weather {
+                font-size: 1.25rem;
+                border: 1px solid #ccc;
+                padding: 1.5rem;
+                border-radius: 0.5rem;
+            }
         }
     </style>
 </head>
-<body class="font-sans text-center bg-sky-200 p-5 ">
-    <h1 class="text-3xl text-white font-bold underline underline-bold  mb-16 my-12 lg:mb-20">Live Weather Upadate</h1>
+<body class="font-sans text-center bg-sky-200 p-5">
+    <h1 class="text-white font-bold underline underline-bold">Live Weather Update</h1>
     <div class="mb-5">
         <input type="text" id="city" class="px-3 py-2 text-bold text-lg border rounded-md text-base" placeholder="Enter city name">
         <button onclick="getWeather()" class="px-4 py-2 text-lg text-bold bg-blue-500 text-white rounded-md">Get Weather</button>
